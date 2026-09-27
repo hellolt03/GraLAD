@@ -67,18 +67,6 @@ dataset/
 `-- Spirit/
     `-- Spirit.log
 ```
-
-
-### Expected input format
-
-Each input line must begin with a label followed by a numeric timestamp:
-
-```text
-<label> <timestamp> <remaining log fields and message>
-```
-
-The label `-` denotes a normal log entry; every other label is treated as anomalous. The loader infers where the message body starts for BGL, Thunderbird, and Spirit from the file path.
-
 ### Dataset References
 
 When using these datasets, please cite the original supercomputer-log study:

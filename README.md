@@ -60,7 +60,7 @@ Download **Spirit** from the following Zenodo record:
 
 - https://zenodo.org/records/5176176
 
-Download `NeuralLog.zip`, extract `raw/Spirit1G.log`, and place it in the following location (renaming it to `Spirit.log`):
+Place it in the following location:
 
 ```text
 dataset/

@@ -1,0 +1,110 @@
+preprocess:
+  time_bin_seconds: 60.0
+  min_freq_ratio: 5.0e-06
+  max_templates: 3000
+  max_lines: 10000000
+  num_fields: null
+  source_message_start: null
+  target_message_start: null
+  semantic_clustering: true
+  semantic_cluster_count: null
+  semantic_cluster_ratio: 0.08
+  semantic_cluster_max_clusters: 256
+  semantic_cluster_tfidf_max_features: 4096
+  semantic_cluster_random_seed: 8
+
+split:
+  source_train_ratio: 0.5
+  target_train_ratio: 0.4
+  val_ratio: 0.3
+  test_ratio: 0.3
+  min_train_bins: 20
+  eval_mode: stratified_random
+  eval_anomaly_ratio: 0.5
+  eval_label_min_anomaly_lines: 1
+  random_seed: 8
+  val_size: null
+  test_size: null
+
+run:
+  use_target_train: true
+  source_sample_ratio: null
+  min_target_calibration_normal_bins: 100
+  target_calibration_fallback: pooled
+  target_score_calibration_strategy: target
+  transfer_edge_include_validation_normal: false
+  save_summary: true
+
+granger:
+  max_lag: 5
+  ridge_alpha: 1.0
+  transform: log1p
+  normalize: robust
+  min_total_count: 20.0
+  min_active_bins: 5
+  min_variance: 0.0001
+  max_features: 128
+  redundancy_threshold: 0.95
+  feature_selection_mode: pooled
+  source_feature_weight: 0.25
+  source_feature_min_active_bins: 2
+  edge_threshold: 0.01
+  edge_selection: none
+  top_k_parents: 3
+  remove_self_edges: true
+  residual_score_weight: 1.0
+  edge_score_weight: 0.2
+  transfer_edge_enabled: false
+  target_score_enabled: true
+  target_score_feature_scope: selected
+  target_score_feature_scopes:
+    - selected
+    - top_25
+    - top_50
+    - top_100
+  target_score_top_ratio: 0.05
+  target_score_top_min: 3
+  target_score_aggregation: rank_weighted_mean
+  target_score_rank_weight_power: 1.0
+  target_score_softmax_temperature: 1.0
+  target_score_min_scale: 1.0e-06
+
+detect:
+  percentile: 95.0
+  zscore: false
+  threshold_strategy: f1_at_precision
+  min_recall: 0.9
+  min_precision: 0.85
+  min_threshold: null
+  precision_threshold_min_recall: 0.2
+  validation_best_min_recall: 0.2
+  validation_best_min_f1: 0.05
+  score_component: validation_best
+  candidate_components:
+    - score
+    - edge
+    - level_selected
+    - level_top25
+    - level_top50
+    - level_top100
+    - edge_level_fusion
+  edge_level_fusion_level_components:
+    - level_selected
+    - level_top25
+    - level_top50
+    - level_top100
+  edge_level_fusion_level_weights:
+    - 0.25
+    - 0.5
+    - 0.75
+  edge_level_fusion_normalized: true
+
+postprocess:
+  enabled: false
+  min_consecutive: 1
+  rolling_mean_window: 1
+
+output_root: results/main
+cache_root: results/cache
+output_dir: null
+cache_dir: null
